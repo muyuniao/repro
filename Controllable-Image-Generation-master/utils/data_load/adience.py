@@ -14,8 +14,9 @@ class MyDataset(data_utils.Dataset):
     def __init__(self, img_root, data_root, dataset, transform=None, fold=4):
         self.data_list = []
         self.transform = transform
+        self.img_root = img_root
 
-        root = '/<your path>/AdienceBenchmarkGenderAndAgeClassification/AgeGenderDeepLearning/Folds/train_val_txt_files_per_fold'
+        root = data_root
 
         train = 'age_train.txt'
         test = 'age_test.txt'
@@ -71,10 +72,10 @@ class MyDataset(data_utils.Dataset):
                 pass
 
         img_path_ref = copy.deepcopy(self.data_list[idx2])[:-3]
-        img_path_ref = '/<your path>/aligned/' + img_path_ref
+        img_path_ref = os.path.join(self.img_root, img_path_ref)
         img_ref = Image.open(img_path_ref).convert('RGB')
         # label = item[-1]
-        img_path = '/<your path>/aligned/' + img_path
+        img_path = os.path.join(self.img_root, img_path)
         img = Image.open(img_path).convert('RGB')
         if self.transform:
             img = self.transform(img)
@@ -85,3 +86,4 @@ class MyDataset(data_utils.Dataset):
 
     def __len__(self):
         return len(self.data_list)
+

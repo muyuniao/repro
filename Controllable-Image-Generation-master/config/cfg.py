@@ -19,6 +19,8 @@ class BaseConfig(object):
         self.parser.add_argument('--resume', default=None, type=str, help='Path to target resume checkpoint')
         self.parser.add_argument('--pretrained', default=None, type=str, help='Path to target pretrained checkpoint')
         self.parser.add_argument('--data_name', default='adience')
+        self.parser.add_argument('--img_root', default='', type=str, help='Path to image folder')
+        self.parser.add_argument('--data_root', default='', type=str, help='Path to data/fold folder')
         self.parser.add_argument('--debug', action='store_true', help='use eval mode')
         self.parser.add_argument('--fold', default=4, type=int, help='use k fold validation')
 

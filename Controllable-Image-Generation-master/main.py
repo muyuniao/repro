@@ -60,30 +60,29 @@ def main(args):
 if __name__ == '__main__':
     cfg = BaseConfig()
     gpu_id = 0
-    dataset = 'aesthetics'
+    dataset = 'adience'
 
     # ============================= Adience =============================
     if dataset == 'adience':
         for fold in range(5):
             model_name = 'cigpvt'
+            show = True if fold == 0 else False
             ckpt_name = 'Adience/{model_name}/'.format(model_name=model_name)
             fixed = '--gpu_id {gpu_id} ' \
                     '--model_name endevgg ' \
                     '--data_name faces ' \
+                    '--img_root /home/duomeitinrfx/data/Aidence/faces/ ' \
+                    '--data_root /home/duomeitinrfx/users/yunhe/data/Adience/folds/ ' \
                     '--num_classes 8 ' \
                     '--max_iter 16000 ' \
                     '--stepvalues 12000 ' \
                     '--exp_name fold_{fold} ' \
                     '--fold {fold} ' \
-                    '--save_folder /<your path>/{ckpt_name}/ ' \
-                    '--save_log /<your path>/{ckpt_name}/'.format(steps=steps,
+                    '--save_folder /home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/{ckpt_name}/ ' \
+                    '--save_log /home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/{ckpt_name}/'.format(gpu_id=gpu_id,
                                                                 ckpt_name=ckpt_name,
                                                                 fold=fold,
-                                                                sub_iter=sub_iter,
-                                                                max_iter=max_iter,
-                                                                exp_name=exp_name,
-                                                                model_name=model_name,
-                                                                data_name=data_name) \
+                                                                model_name=model_name) \
             .split()
             args = cfg.initialize(fixed, show=show)
             main(args)
