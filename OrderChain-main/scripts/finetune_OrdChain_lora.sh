@@ -4,7 +4,7 @@
 export TRANSFORMERS_OFFLINE=1
 include=localhost:0
 
-deepspeed --include $include llava/train/train_mem.py \
+python -m deepspeed.launcher.runner --include $include llava/train/train_mem.py \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
     --deepspeed ./scripts/zero3.json \
     --model_name_or_path /home/duomeitinrfx/users/yunhe/models/llava-v1.5-7b \
