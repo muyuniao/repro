@@ -1,15 +1,17 @@
 #!/bin/bash
 #/home/duomeitinrfx/users/yunhe/models
 #/home/duomeitinrfx/data/Adience
+export PYTHONPATH="$PWD:$PYTHONPATH"
 export TRANSFORMERS_OFFLINE=1
-include=localhost:0
+# 监控脚本将自动填充真实的显卡编号到下面这个环境变量里
+include=localhost:${SYS_GPU_ID:-0}
 
 python -m deepspeed.launcher.runner --include $include llava/train/train_mem.py \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
-    --deepspeed ./scripts/zero3.json \
+    --deepspeed ./scripts/zero2.json \
     --model_name_or_path /home/duomeitinrfx/users/yunhe/models/llava-v1.5-7b \
     --data_path /home/duomeitinrfx/data/Adience/Adience_llava_train.json \
-    --image_folder /home/duomeitinrfx/data/Adience/images/ \
+    --image_folder /home/duomeitinrfx/data/Adience/faces/ \
     --vision_tower /home/duomeitinrfx/users/yunhe/models/clip-vit-large-patch14-336 \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_layer -2 \
@@ -19,9 +21,9 @@ python -m deepspeed.launcher.runner --include $include llava/train/train_mem.py 
     --group_by_modality_length True \
     --bf16 True \
     --output_dir /home/duomeitinrfx/users/yunhe/reproduce/OrderChain-main/checkpoints \
-    --per_device_train_batch_size 16 \
-    --per_device_eval_batch_size 4 \
-    --gradient_accumulation_steps 1 \
+    --per_device_train_batch_size 2 \
+    --per_device_eval_batch_size 1 \
+    --gradient_accumulation_steps 8 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
     --save_steps 50000 \
