@@ -377,6 +377,9 @@ def main():
                       "Standard DPO", DPO_EPOCHS, DPO_LR, BETA)
     r_std = evaluate(model, tokenizer, image_processor, test_data, "SFT+StdDPO")
     results.append(r_std)
+    std_dpo_path = f"{OUTPUT_DIR}/std_dpo_adapter"
+    model.save_pretrained(std_dpo_path)
+    print(f"Standard DPO 权重已保存至: {std_dpo_path}")
     free(model)
 
     # [4/5] RS-DPO
@@ -387,6 +390,9 @@ def main():
                       "RS-DPO (Ours)", DPO_EPOCHS, DPO_LR, BETA)
     r_rs = evaluate(model, tokenizer, image_processor, test_data, "SFT+RS-DPO")
     results.append(r_rs)
+    rs_dpo_path = f"{OUTPUT_DIR}/rs_dpo_adapter"
+    model.save_pretrained(rs_dpo_path)
+    print(f"RS-DPO 最佳权重已保存至: {rs_dpo_path}")
     free(model)
 
     # [5/5] 汇总
