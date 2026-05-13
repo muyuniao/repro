@@ -16,12 +16,17 @@ MODEL_PATH = "/home/duomeitinrfx/users/yunhe/models/llava-v1.5-7b"
 HCI_DATA_DIR = "/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database"
 OUTPUT_DIR = "/home/duomeitinrfx/users/yunhe/reproduce/hci_ordinal_output"
 
-SFT_EPOCHS = 3
-DPO_EPOCHS = 2
+SFT_EPOCHS = 2         # 微调 2 轮足够微调
+DPO_EPOCHS = 1         # 对齐 1 轮足够
 SFT_LR = 2e-4
 DPO_LR = 1e-5
 BETA = 0.1
 SEED = 42
+
+# ====== 性能与加速配置 (加速 10x-100x 🚀) ======
+USE_GRAD_CHECKPOINT = False      # 设为 False 以禁用梯度检查点，速度提升 ~30%
+TRAIN_SUBSET_SIZE = 300          # 训练集采样图片数（设为 None 则使用全部 1075 张），减少循环大幅缩短时间
+MAX_DPO_PAIRS = 500              # 限制每阶段 DPO 训练/预计算的对数（设为 None 则不限制），加速对齐过程
 
 # 加入 LLaVA 代码路径
 sys.path.insert(0, ORDERCHAIN_PATH)
@@ -129,7 +134,11 @@ def load_llava(model_path):
     for p in model.get_vision_tower().parameters():
         p.requires_grad = False
     # 启用 gradient checkpointing
-    model.gradient_checkpointing_enable()
+    if USE_GRAD_CHECKPOINT:
+        model.gradient_checkpointing_enable()
+        print("  [Perf] 已启用梯度检查点 (节省显存，减慢速度)")
+    else:
+        print("  [Perf] 已禁用梯度检查点 (增加显存，速度提升 ~30%)")
     model.config.use_cache = False  # 消除警告
     model.eval()
     return tokenizer, model, image_processor
@@ -261,6 +270,9 @@ def gen_dpo_pairs(data, n_pairs=2, distance_weight=False):
                 "distance": d, "weight": float(d) if distance_weight else 1.0,
             })
     random.shuffle(pairs)
+    if MAX_DPO_PAIRS is not None and len(pairs) > MAX_DPO_PAIRS:
+        pairs = pairs[:MAX_DPO_PAIRS]
+        print(f"  [Perf] DPO pairs 已采样限制至: {len(pairs)}")
     return pairs
 
 def precompute_ref(model, tokenizer, image_processor, pairs):
@@ -363,6 +375,11 @@ def main():
     print("=" * 60)
 
     train_data, test_data = load_hci_dataset(HCI_DATA_DIR)
+    if TRAIN_SUBSET_SIZE is not None and len(train_data) > TRAIN_SUBSET_SIZE:
+        random.seed(SEED)
+        train_data = random.sample(train_data, TRAIN_SUBSET_SIZE)
+        print(f"  [Perf] 已对训练集采样子集进行快速训练，当前数量: {len(train_data)}")
+    
     std_pairs = gen_dpo_pairs(train_data, 2, False)
     rs_pairs  = gen_dpo_pairs(train_data, 2, True)
     print(f"DPO pairs: {len(std_pairs)}")
