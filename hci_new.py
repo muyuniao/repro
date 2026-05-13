@@ -25,8 +25,8 @@ SEED = 42
 
 # ====== 性能与加速配置 (加速 10x-100x 🚀) ======
 USE_GRAD_CHECKPOINT = False      # 设为 False 以禁用梯度检查点，速度提升 ~30%
-TRAIN_SUBSET_SIZE = 300          # 训练集采样图片数（设为 None 则使用全部 1075 张），减少循环大幅缩短时间
-MAX_DPO_PAIRS = 500              # 限制每阶段 DPO 训练/预计算的对数（设为 None 则不限制），加速对齐过程
+TRAIN_SUBSET_SIZE = None          # 恢复为 None，强制使用全部 1075 张图片
+MAX_DPO_PAIRS = None              # 恢复为 None，不限制 DPO 样本数
 
 # 加入 LLaVA 代码路径
 sys.path.insert(0, ORDERCHAIN_PATH)
