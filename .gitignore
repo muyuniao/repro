@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# SSH Keys and private credentials (CRITICAL: DO NOT PUSH SSH KEYS TO GITHUB)
+id_ed25519*
+id_rsa*
+*.pem
+*.key
+.env
+
+# Weights, models, and checkpoints (CRITICAL: Exceeds GitHub's 100MB file size limit)
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.pkl
+*.h5
+*.whl
+
+# Large output/checkpoint directories
+hci_ordinal_output/sft_adapter/
+ordinal_sim_output/sft_adapter/
+
+# Wandb logs and metrics
+wandb/
+*.log
+logs/

@@ -19,12 +19,16 @@ class BaseConfig(object):
         self.parser.add_argument('--resume', default=None, type=str, help='Path to target resume checkpoint')
         self.parser.add_argument('--pretrained', default=None, type=str, help='Path to target pretrained checkpoint')
         self.parser.add_argument('--data_name', default='adience')
-        self.parser.add_argument('--img_root', default='', type=str, help='Path to image folder')
-        self.parser.add_argument('--data_root', default='', type=str, help='Path to data/fold folder')
         self.parser.add_argument('--debug', action='store_true', help='use eval mode')
         self.parser.add_argument('--fold', default=4, type=int, help='use k fold validation')
-
-
+        self.parser.add_argument('--img_root', default=r'/home/duomeitinrfx/data/Aidence/faces', type=str, help='Path to image data')
+        self.parser.add_argument('--data_root', default='./data_split/', type=str, help='Path to data split csv files')
+        # [新增这一行] 补充漏掉的 eval_only 参数
+        self.parser.add_argument('--eval_only', action='store_true', help='Only do evaluation')
+        # [新增这一行] 补充漏掉的 main_loss_type 参数
+        self.parser.add_argument('--main_loss_type', default='CE', type=str, help='Main loss type')
+        # [新增这一行] 补充漏掉的 no_GAN 参数
+        self.parser.add_argument('--no_GAN', action='store_true', help='disable GAN training')
         #train cfg
 
         self.parser.add_argument('--start_iter', default=0, type=int,help='Begin counting iterations starting from this value (should be used with resume)')

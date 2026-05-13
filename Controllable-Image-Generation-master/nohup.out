@@ -1,0 +1,314 @@
+Traceback (most recent call last):
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 1, in <module>
+    import torch
+ModuleNotFoundError: No modul/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/torch/_subclasses/functional_tensor.py:307: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:84.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+Traceback (most recent call last):
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 2, in <module>
+    import torchvision.transforms as transforms
+ModuleNotFoundError: No module named 'torchvision'
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/torch/_subclasses/functional_tensor.py:307: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:84.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+Traceback (most recent call last):
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 2, in <module>
+    import torchvision.transforms as transforms
+ModuleNotFoundError: No module named 'torchvision'
+Traceback (most recent call last):
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 4, in <module>
+    from training.trainer import DefaultTrainer
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/training/trainer.py", line 5, in <module>
+    import models
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/__init__.py", line 2, in <module>
+    from .CIG_PVT import Model as cigpvt
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/CIG_PVT.py", line 6, in <module>
+    from models import pvt
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py", line 6, in <module>
+    from timm.models.layers import DropPath, to_2tuple, trunc_normal_
+ModuleNotFoundError: No module named 'timm'
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:418: UserWarning: Overwriting pvt_v2_b0 in registry with models.pvt.pvt_v2_b0. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b0(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:429: UserWarning: Overwriting pvt_v2_b1 in registry with models.pvt.pvt_v2_b1. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b1(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:440: UserWarning: Overwriting pvt_v2_b2 in registry with models.pvt.pvt_v2_b2. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:450: UserWarning: Overwriting pvt_v2_b3 in registry with models.pvt.pvt_v2_b3. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b3(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:470: UserWarning: Overwriting pvt_v2_b4 in registry with models.pvt.pvt_v2_b4. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b4(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:481: UserWarning: Overwriting pvt_v2_b5 in registry with models.pvt.pvt_v2_b5. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b5(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:492: UserWarning: Overwriting pvt_v2_b2_li in registry with models.pvt.pvt_v2_b2_li. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2_li(pretrained=False, **kwargs):
+Traceback (most recent call last):
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 4, in <module>
+    from training.trainer import DefaultTrainer
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/training/trainer.py", line 7, in <module>
+    from tensorboardX import SummaryWriter
+ModuleNotFoundError: No module named 'tensorboardX'
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:418: UserWarning: Overwriting pvt_v2_b0 in registry with models.pvt.pvt_v2_b0. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b0(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:429: UserWarning: Overwriting pvt_v2_b1 in registry with models.pvt.pvt_v2_b1. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b1(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:440: UserWarning: Overwriting pvt_v2_b2 in registry with models.pvt.pvt_v2_b2. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:450: UserWarning: Overwriting pvt_v2_b3 in registry with models.pvt.pvt_v2_b3. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b3(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:470: UserWarning: Overwriting pvt_v2_b4 in registry with models.pvt.pvt_v2_b4. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b4(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:481: UserWarning: Overwriting pvt_v2_b5 in registry with models.pvt.pvt_v2_b5. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b5(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:492: UserWarning: Overwriting pvt_v2_b2_li in registry with models.pvt.pvt_v2_b2_li. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2_li(pretrained=False, **kwargs):
+Traceback (most recent call last):
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 4, in <module>
+    from training.trainer import DefaultTrainer
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/training/trainer.py", line 11, in <module>
+    from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score, cohen_kappa_score
+ModuleNotFoundError: No module named 'sklearn'
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:418: UserWarning: Overwriting pvt_v2_b0 in registry with models.pvt.pvt_v2_b0. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b0(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:429: UserWarning: Overwriting pvt_v2_b1 in registry with models.pvt.pvt_v2_b1. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b1(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:440: UserWarning: Overwriting pvt_v2_b2 in registry with models.pvt.pvt_v2_b2. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:450: UserWarning: Overwriting pvt_v2_b3 in registry with models.pvt.pvt_v2_b3. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b3(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:470: UserWarning: Overwriting pvt_v2_b4 in registry with models.pvt.pvt_v2_b4. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b4(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:481: UserWarning: Overwriting pvt_v2_b5 in registry with models.pvt.pvt_v2_b5. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b5(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:492: UserWarning: Overwriting pvt_v2_b2_li in registry with models.pvt.pvt_v2_b2_li. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2_li(pretrained=False, **kwargs):
+Traceback (most recent call last):
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 6, in <module>
+    from utils import data_load
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/utils/data_load/__init__.py", line 1, in <module>
+    from .aesthetics import MyDataset as aesthetics
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/utils/data_load/aesthetics.py", line 10, in <module>
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:418: UserWarning: Overwriting pvt_v2_b0 in registry with models.pvt.pvt_v2_b0. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b0(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:429: UserWarning: Overwriting pvt_v2_b1 in registry with models.pvt.pvt_v2_b1. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b1(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:440: UserWarning: Overwriting pvt_v2_b2 in registry with models.pvt.pvt_v2_b2. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:450: UserWarning: Overwriting pvt_v2_b3 in registry with models.pvt.pvt_v2_b3. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b3(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:470: UserWarning: Overwriting pvt_v2_b4 in registry with models.pvt.pvt_v2_b4. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b4(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:481: UserWarning: Overwriting pvt_v2_b5 in registry with models.pvt.pvt_v2_b5. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b5(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:492: UserWarning: Overwriting pvt_v2_b2_li in registry with models.pvt.pvt_v2_b2_li. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2_li(pretrained=False, **kwargs):
+0
+--------------Options Log-------------
+Apr13_16-46-15
+alpha: 5
+batch_size: 18
+beta: 2
+cls_only: False
+data_name: adience
+data_root: /home/duomeitinrfx/data/Aidence/folds/
+debug: False
+display_freq: 20
+dropout: 0.5
+exp_name: fold_0
+fold: 0
+gamma: 0.1
+gpu_id: 2
+img_root: /home/duomeitinrfx/data/Aidence/faces/
+lmbd: 0.2
+local_rank: 0
+loss_name: CELoss
+lr: 0.0001
+lr_adjust: fix
+max_iter: 16000
+mix_mode: None
+model_name: endevgg
+momentum: 0.9
+num_classes: 8
+optim: SGD
+pretrained: None
+resnet_layers: 50
+resume: None
+save_folder: ./result/Adience/cigpvt//
+save_freq: 400
+save_log: ./result/Adience/cigpvt//
+start_iter: 0
+stepvalues: [12000]
+sub_iter: -1
+tau: 0.2
+val_freq: 40
+warmup_steps: 1000
+weight_decay: 0.0005
+weights: [1, 1]
+
+--------------Options End-------------
+Traceback (most recent call last):
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 88, in <module>
+    main(args)
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 18, in main
+    train_data = dataset(
+TypeError: 'module' object is not callable
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:418: UserWarning: Overwriting pvt_v2_b0 in registry with models.pvt.pvt_v2_b0. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b0(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:429: UserWarning: Overwriting pvt_v2_b1 in registry with models.pvt.pvt_v2_b1. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b1(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:440: UserWarning: Overwriting pvt_v2_b2 in registry with models.pvt.pvt_v2_b2. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:450: UserWarning: Overwriting pvt_v2_b3 in registry with models.pvt.pvt_v2_b3. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b3(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:470: UserWarning: Overwriting pvt_v2_b4 in registry with models.pvt.pvt_v2_b4. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b4(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:481: UserWarning: Overwriting pvt_v2_b5 in registry with models.pvt.pvt_v2_b5. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b5(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:492: UserWarning: Overwriting pvt_v2_b2_li in registry with models.pvt.pvt_v2_b2_li. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2_li(pretrained=False, **kwargs):
+0
+--------------Options Log-------------
+Apr13_16-48-42
+alpha: 5
+batch_size: 18
+beta: 2
+cls_only: False
+data_name: adience
+data_root: /home/duomeitinrfx/data/Aidence/folds/
+debug: False
+display_freq: 20
+dropout: 0.5
+exp_name: fold_0
+fold: 0
+gamma: 0.1
+gpu_id: 2
+img_root: /home/duomeitinrfx/data/Aidence/faces/
+lmbd: 0.2
+local_rank: 0
+loss_name: CELoss
+lr: 0.0001
+lr_adjust: fix
+max_iter: 16000
+mix_mode: None
+model_name: endevgg
+momentum: 0.9
+num_classes: 8
+optim: SGD
+pretrained: None
+resnet_layers: 50
+resume: None
+save_folder: ./result/Adience/cigpvt//
+save_freq: 400
+save_log: ./result/Adience/cigpvt//
+start_iter: 0
+stepvalues: [12000]
+sub_iter: -1
+tau: 0.2
+val_freq: 40
+warmup_steps: 1000
+weight_decay: 0.0005
+weights: [1, 1]
+
+--------------Options End-------------
+?
+?
+Traceback (most recent call last):
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 88, in <module>
+    main(args)
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 56, in main
+    trainer = DefaultTrainer(args)
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/training/trainer.py", line 33, in __init__
+    self.eval_only = args.eval_only
+AttributeError: 'Namespace' object has no attribute 'eval_only'
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/duomeitinrfx/.conda/envs/plate/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:418: UserWarning: Overwriting pvt_v2_b0 in registry with models.pvt.pvt_v2_b0. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b0(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:429: UserWarning: Overwriting pvt_v2_b1 in registry with models.pvt.pvt_v2_b1. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b1(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:440: UserWarning: Overwriting pvt_v2_b2 in registry with models.pvt.pvt_v2_b2. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:450: UserWarning: Overwriting pvt_v2_b3 in registry with models.pvt.pvt_v2_b3. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b3(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:470: UserWarning: Overwriting pvt_v2_b4 in registry with models.pvt.pvt_v2_b4. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b4(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:481: UserWarning: Overwriting pvt_v2_b5 in registry with models.pvt.pvt_v2_b5. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b5(pretrained=False, **kwargs):
+/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/models/pvt.py:492: UserWarning: Overwriting pvt_v2_b2_li in registry with models.pvt.pvt_v2_b2_li. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def pvt_v2_b2_li(pretrained=False, **kwargs):
+0
+--------------Options Log-------------
+Apr13_16-50-17
+alpha: 5
+batch_size: 18
+beta: 2
+cls_only: False
+data_name: adience
+data_root: /home/duomeitinrfx/data/Aidence/folds/
+debug: False
+display_freq: 20
+dropout: 0.5
+eval_only: False
+exp_name: fold_0
+fold: 0
+gamma: 0.1
+gpu_id: 2
+img_root: /home/duomeitinrfx/data/Aidence/faces/
+lmbd: 0.2
+local_rank: 0
+loss_name: CELoss
+lr: 0.0001
+lr_adjust: fix
+max_iter: 16000
+mix_mode: None
+model_name: endevgg
+momentum: 0.9
+num_classes: 8
+optim: SGD
+pretrained: None
+resnet_layers: 50
+resume: None
+save_folder: ./result/Adience/cigpvt//
+save_freq: 400
+save_log: ./result/Adience/cigpvt//
+start_iter: 0
+stepvalues: [12000]
+sub_iter: -1
+tau: 0.2
+val_freq: 40
+warmup_steps: 1000
+weight_decay: 0.0005
+weights: [1, 1]
+
+--------------Options End-------------
+?
+?
+Traceback (most recent call last):
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 88, in <module>
+    main(args)
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/main.py", line 56, in main
+    trainer = DefaultTrainer(args)
+  File "/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/training/trainer.py", line 34, in __init__
+    self.main_loss_type = args.main_loss_type
+AttributeError: 'Namespace' object has no attribute 'main_loss_type'

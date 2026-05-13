@@ -12,9 +12,9 @@ def get_free_gpu():
         )
         usages = [int(x.strip()) for x in result.split('\n') if x.strip()]
         
-        # 寻找占用极低的空闲显卡（小于 1000 MB 视为无人使用）
+        # 寻找占用小于 4000 MB 的显卡
         for i, usage in enumerate(usages):
-            if usage < 1000:
+            if usage < 4000:
                 return i
     except Exception as e:
         print(f"[{datetime.now().strftime('%H:%M:%S')}] 检查 nvidia-smi 时出错: {e}")
@@ -23,7 +23,7 @@ def get_free_gpu():
 def main():
     print("=========================================")
     print("⏳ 自动抢卡与训练监控脚本已启动 ⏳")
-    print("监控频率：每 10 分钟（600 秒）扫描一次四张显卡状态")
+    print("监控频率：每 3 小时（10800 秒）扫描一次四张显卡状态")
     print("=========================================")
     
     while True:
@@ -47,8 +47,8 @@ def main():
         else:
             print(f"[{datetime.now().strftime('%H:%M:%S')}] 四张卡均被严重占用中，继续潜伏等待...")
         
-        # 每隔 600 秒（10分钟）检查一次
-        time.sleep(600)
+        # 每隔 10800 秒（3小时）检查一次
+        time.sleep(10800)
 
 if __name__ == "__main__":
     main()

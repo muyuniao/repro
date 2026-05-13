@@ -40,7 +40,7 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
             bnb_4bit_quant_type='nf4'
         )
     else:
-        kwargs['torch_dtype'] = torch.float16
+        kwargs['torch_dtype'] = kwargs.get('torch_dtype', torch.bfloat16)
 
     if use_flash_attn:
         kwargs['attn_implementation'] = 'flash_attention_2'
@@ -51,7 +51,7 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
             warnings.warn('There is `lora` in model name but no `model_base` is provided. If you are loading a LoRA model, please provide the `model_base` argument. Detailed instruction: https://github.com/haotian-liu/LLaVA#launch-a-model-worker-lora-weights-unmerged.')
         if 'lora' in model_name.lower() and model_base is not None:
             from llava.model.language_model.llava_llama import LlavaConfig
-            lora_cfg_pretrained = LlavaConfig.from_pretrained(model_path)
+            lora_cfg_pretrained = LlavaConfig.from_pretrained(model_base)
             tokenizer = AutoTokenizer.from_pretrained(model_base, use_fast=False)
             print('Loading LLaVA from base model...')
             model = LlavaLlamaForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=lora_cfg_pretrained, **kwargs)
@@ -156,7 +156,7 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
         if not vision_tower.is_loaded:
             vision_tower.load_model(device_map=device_map)
         if device_map != 'auto':
-            vision_tower.to(device=device_map, dtype=torch.float16)
+            vision_tower.to(device=device_map, dtype=kwargs.get('torch_dtype', torch.bfloat16))
         image_processor = vision_tower.image_processor
 
     if hasattr(model.config, "max_sequence_length"):

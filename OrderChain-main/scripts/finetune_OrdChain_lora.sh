@@ -3,8 +3,10 @@
 #/home/duomeitinrfx/data/Adience
 export PYTHONPATH="$PWD:$PYTHONPATH"
 export TRANSFORMERS_OFFLINE=1
-# 监控脚本将自动填充真实的显卡编号到下面这个环境变量里
-include=localhost:${SYS_GPU_ID:-0}
+export WANDB_PROJECT="OrderChain_Reproduction"  # 自定义你的 WandB 项目大分类名称
+export WANDB_NAME="SingleGPU_ZeRO2_Run2"        # 自定义本次实验具体的 Run 名称
+# 使用空闲的单张 GPU 3
+include=localhost:3
 
 python -m deepspeed.launcher.runner --include $include llava/train/train_mem.py \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
@@ -20,14 +22,15 @@ python -m deepspeed.launcher.runner --include $include llava/train/train_mem.py 
     --image_aspect_ratio pad \
     --group_by_modality_length True \
     --bf16 True \
-    --output_dir /home/duomeitinrfx/users/yunhe/reproduce/OrderChain-main/checkpoints \
+    --output_dir /home/duomeitinrfx/users/yunhe/reproduce/OrderChain-main/checkpoints_v2 \
     --per_device_train_batch_size 2 \
     --per_device_eval_batch_size 1 \
+    --num_train_epochs 2 \
     --gradient_accumulation_steps 8 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
-    --save_steps 50000 \
-    --save_total_limit 1 \
+    --save_steps 2000 \
+    --save_total_limit 5 \
     --learning_rate 2e-4 \
     --weight_decay 0. \
     --warmup_ratio 0.03 \

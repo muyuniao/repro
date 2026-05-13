@@ -1,6 +1,7 @@
 import argparse
 import torch
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from llava.constants import (
     IMAGE_TOKEN_INDEX,
     DEFAULT_IMAGE_TOKEN,
@@ -55,6 +56,7 @@ def eval_model(args):
     disable_torch_init()
 
     model_name = get_model_name_from_path(args.model_path)
+    model_name = "llava-lora-" + model_name  # 强制补全标识符以触发 builder.py 中的 LLaVA LoRA 加载分支
     tokenizer, model, image_processor, context_len = load_pretrained_model(
         args.model_path, args.model_base, model_name
     )
@@ -68,7 +70,9 @@ def eval_model(args):
         idx = line["id"]
         labels = [conv['value'] for conv in line["conversations"] if conv['from'] == "gpt"]
         label = labels[0]
-        image_files = line["image"]
+        image_files = line.get("image", None)
+        if image_files is not None and getattr(args, 'image_folder', None):
+            image_files = os.path.join(args.image_folder, image_files)
 
         qss = [conv['value'] for conv in line["conversations"] if conv['from'] == "human"]
         qs = qss[0]
@@ -118,7 +122,7 @@ def eval_model(args):
             images,
             image_processor,
             model.config
-        ).to(model.device, dtype=torch.bfloat16)
+        ).to(model.device, dtype=model.dtype)
 
         input_ids = (
             tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, return_tensors="pt")
@@ -150,9 +154,10 @@ def eval_model(args):
     ans_file.close()
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-path", type=str, default="/home/duomeitinrfx/users/yunhe/reproduce/OrderChain-main/checkpoints")
-    parser.add_argument("--model-base", type=str, default=None)
-    parser.add_argument("--question-file", type=str, default="/home/duomeitinrfx/users/yunhe/reproduce/OrderChain-main/data/OrderChain_test.json")
+    parser.add_argument("--model-path", type=str, default="/home/duomeitinrfx/users/yunhe/reproduce/OrderChain-main/checkpoints_v2/checkpoint-6000")
+    parser.add_argument("--model-base", type=str, default="/home/duomeitinrfx/users/yunhe/models/llava-v1.5-7b")
+    parser.add_argument("--question-file", type=str, default="/home/duomeitinrfx/data/Adience/Adience_llava_test.json")
+    parser.add_argument("--image-folder", type=str, default="/home/duomeitinrfx/data/Adience/faces/")
     parser.add_argument("--answers-file", type=str, default="/home/duomeitinrfx/users/yunhe/reproduce/OrderChain-main/data/OrderChain_test_answer.jsonl")
     parser.add_argument("--conv-mode", type=str, default=None)
     parser.add_argument("--sep", type=str, default=",")

@@ -13,7 +13,7 @@ def main(args):
     torch.manual_seed(runseed)
     np.random.seed(runseed)
 
-    dataset = getattr(data_load, args.data_name.lower())
+    dataset = getattr(data_load, args.data_name.lower()).MyDataset
 
     train_data = dataset(
         img_root=args.img_root,
@@ -59,31 +59,32 @@ def main(args):
 
 if __name__ == '__main__':
     cfg = BaseConfig()
-    gpu_id = 0
+    gpu_id = 2
     dataset = 'adience'
-
-    # ============================= Adience =============================
+# ============================= Adience =============================
     if dataset == 'adience':
         for fold in range(5):
             model_name = 'cigpvt'
-            show = True if fold == 0 else False
-            ckpt_name = 'Adience/{model_name}/'.format(model_name=model_name)
-            fixed = '--gpu_id {gpu_id} ' \
-                    '--model_name endevgg ' \
-                    '--data_name faces ' \
-                    '--img_root /home/duomeitinrfx/data/Aidence/faces/ ' \
-                    '--data_root /home/duomeitinrfx/users/yunhe/data/Adience/folds/ ' \
+            ckpt_name = f'Adience/{model_name}/'
+            show = True if fold == 0 else False  # 修复未定义的 show 变量
+            
+            # 使用 f-string 修复原作者 format 函数抛出的变量缺失错误
+            # 请确保 --img_root 填写了你本地 Adience 图片的真实绝对路径
+            fixed = f'--gpu_id {gpu_id} ' \
+                    '--model_name cigvgg ' \
+                    '--data_name adience ' \
+                    '--batch_size 8 ' \
                     '--num_classes 8 ' \
                     '--max_iter 16000 ' \
                     '--stepvalues 12000 ' \
-                    '--exp_name fold_{fold} ' \
-                    '--fold {fold} ' \
-                    '--save_folder /home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/{ckpt_name}/ ' \
-                    '--save_log /home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/{ckpt_name}/'.format(gpu_id=gpu_id,
-                                                                ckpt_name=ckpt_name,
-                                                                fold=fold,
-                                                                model_name=model_name) \
-            .split()
+                    f'--exp_name fold_{fold} ' \
+                    f'--fold {fold} ' \
+                    '--img_root /home/duomeitinrfx/data/Aidence/faces/ ' \
+                    '--data_root /home/duomeitinrfx/data/Aidence/folds/ ' \
+                    f'--save_folder ./result/{ckpt_name}/ ' \
+                    f'--save_log ./result/{ckpt_name}/'
+            
+            fixed = fixed.split()
             args = cfg.initialize(fixed, show=show)
             main(args)
 

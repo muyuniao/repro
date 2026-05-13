@@ -14,10 +14,10 @@ class MyDataset(data_utils.Dataset):
     def __init__(self, img_root, data_root, dataset, transform=None, fold=4):
         self.data_list = []
         self.transform = transform
+        # [补上这一行] 将传入的 img_root 保存为类的属性，这样 __getitem__ 才能用它
         self.img_root = img_root
 
         root = data_root
-
         train = 'age_train.txt'
         test = 'age_test.txt'
 
@@ -74,16 +74,16 @@ class MyDataset(data_utils.Dataset):
         img_path_ref = copy.deepcopy(self.data_list[idx2])[:-3]
         img_path_ref = os.path.join(self.img_root, img_path_ref)
         img_ref = Image.open(img_path_ref).convert('RGB')
-        # label = item[-1]
+        
+        # [修改这里] 动态拼接原图片的路径
         img_path = os.path.join(self.img_root, img_path)
         img = Image.open(img_path).convert('RGB')
+        
         if self.transform:
             img = self.transform(img)
             img_ref = self.transform(img_ref)
-
 
         return img, img_ref, label, ref_label
 
     def __len__(self):
         return len(self.data_list)
-

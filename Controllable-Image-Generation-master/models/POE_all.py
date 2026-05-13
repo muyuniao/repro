@@ -188,8 +188,8 @@ def vgg16_bn(pretrained=False, **kwargs):
     model = VGG(make_layers(cfg['D'], batch_norm=True), **kwargs)
     if pretrained:
         unload_model_dict = model.state_dict()
-        pretrained_dict = model_zoo.load_url(model_urls['vgg16_bn'])
-
+        # pretrained_dict = model_zoo.load_url(model_urls['vgg16_bn'])
+        pretrained_dict = torch.load(r'/home/duomeitinrfx/users/yunhe/reproduce/Controllable-Image-Generation-master/vgg16_bn-6c64b313.pth')
         pretrained_dict['emd.0.weight'] = pretrained_dict['classifier.3.weight']
         pretrained_dict['emd.0.bias'] = pretrained_dict['classifier.3.bias']
         pretrained_dict['final.weight'] = pretrained_dict['classifier.6.weight']
