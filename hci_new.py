@@ -8,8 +8,7 @@
 import os, sys, json, random, gc, glob, time
 os.environ["TRANSFORMERS_OFFLINE"] = "1"
 os.environ["HF_HUB_OFFLINE"] = "1"
-if "CUDA_VISIBLE_DEVICES" not in os.environ:
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # 允许命令行指定 GPU
 
 # ====== 路径配置 (按需修改) ======
 ORDERCHAIN_PATH = "/home/duomeitinrfx/users/yunhe/reproduce/OrderChain-main"
