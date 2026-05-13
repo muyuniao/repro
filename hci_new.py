@@ -322,13 +322,30 @@ def evaluate(model, tokenizer, image_processor, test_data, name):
 
     preds, labels = np.array(preds), np.array(labels)
     errs = np.abs(preds - labels)
+
+    # 计算额外的指标 (QWK, F1, Precision, Recall)
+    try:
+        from sklearn.metrics import cohen_kappa_score, precision_recall_f1_support
+        qwk = float(cohen_kappa_score(labels, preds, weights="quadratic"))
+        precision, recall, f1, _ = precision_recall_f1_support(labels, preds, average="weighted", zero_division=0)
+        precision_m, recall_m, f1_m, _ = precision_recall_f1_support(labels, preds, average="macro", zero_division=0)
+    except Exception as e:
+        print(f"指标计算异常: {e}")
+        qwk, precision, recall, f1 = 0.0, 0.0, 0.0, 0.0
+        precision_m, recall_m, f1_m = 0.0, 0.0, 0.0
+
     r = {"model": name, "acc": float(np.mean(preds==labels)),
          "one_off": float(np.mean(errs<=1)), "mae": float(np.mean(errs)),
          "violation": violations/max(checks,1),
+         "qwk": qwk,
+         "f1_weighted": f1, "precision_weighted": precision, "recall_weighted": recall,
+         "f1_macro": f1_m, "precision_macro": precision_m, "recall_macro": recall_m,
          "err_dist": {d: float(np.mean(errs==d)) for d in range(5)}}
+
     print(f"\n--- {name} ---")
     print(f"  Acc: {r['acc']*100:.1f}% | 1-off: {r['one_off']*100:.1f}% | "
           f"MAE: {r['mae']:.4f} | Violation: {r['violation']*100:.1f}%")
+    print(f"  QWK: {qwk:.4f} | F1-weighted: {f1*100:.1f}% | Prec-weighted: {precision*100:.1f}% | Rec-weighted: {recall*100:.1f}%")
     print(f"  Errors: " + " | ".join(f"d={d}:{r['err_dist'][d]*100:.1f}%" for d in range(5)))
     return r
 
@@ -397,14 +414,16 @@ def main():
 
     # [5/5] 汇总
     elapsed = (time.time() - t0) / 60
-    print(f"\n{'='*65}")
+    print(f"\n{'='*85}")
     print(f"  HCI 实验结果 (耗时: {elapsed:.1f} min)")
-    print(f"{'='*65}")
-    print(f"{'Method':<18} {'Acc':>7} {'1-off':>7} {'MAE':>7} {'Violation':>9}")
-    print("-" * 50)
+    print(f"{'='*85}")
+    print(f"{'Method':<16} {'Acc':>6} {'1-off':>6} {'MAE':>6} {'QWK':>6} {'F1-w':>6} {'Prec-w':>6} {'Rec-w':>6} {'Viol':>6}")
+    print("-" * 85)
     for r in results:
-        print(f"{r['model']:<18} {r['acc']*100:>6.1f}% {r['one_off']*100:>6.1f}% "
-              f"{r['mae']:>7.4f} {r['violation']*100:>7.1f}%")
+        print(f"{r['model']:<16} {r['acc']*100:>5.1f}% {r['one_off']*100:>5.1f}% "
+              f"{r['mae']:>6.3f} {r.get('qwk', 0.0):>6.3f} {r.get('f1_weighted', 0.0)*100:>5.1f}% "
+              f"{r.get('precision_weighted', 0.0)*100:>5.1f}% {r.get('recall_weighted', 0.0)*100:>5.1f}% "
+              f"{r['violation']*100:>5.1f}%")
 
     s, d, rs = r_sft["mae"], r_std["mae"], r_rs["mae"]
     print(f"\nMAE: SFT={s:.4f} → StdDPO={d:.4f} → RS-DPO={rs:.4f}")
