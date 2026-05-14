@@ -337,10 +337,10 @@ def evaluate(model, tokenizer, image_processor, test_data, name):
 
     # 计算额外的指标 (QWK, F1, Precision, Recall)
     try:
-        from sklearn.metrics import cohen_kappa_score, precision_recall_f1_support
+        from sklearn.metrics import cohen_kappa_score, precision_recall_fscore_support
         qwk = float(cohen_kappa_score(labels, preds, weights="quadratic"))
-        precision, recall, f1, _ = precision_recall_f1_support(labels, preds, average="weighted", zero_division=0)
-        precision_m, recall_m, f1_m, _ = precision_recall_f1_support(labels, preds, average="macro", zero_division=0)
+        precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average="weighted", zero_division=0)
+        precision_m, recall_m, f1_m, _ = precision_recall_fscore_support(labels, preds, average="macro", zero_division=0)
     except Exception as e:
         print(f"指标计算异常: {e}")
         qwk, precision, recall, f1 = 0.0, 0.0, 0.0, 0.0
