@@ -16,8 +16,8 @@ MODEL_PATH = "/home/duomeitinrfx/users/yunhe/models/llava-v1.5-7b"
 HCI_DATA_DIR = "/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database"
 OUTPUT_DIR = "/home/duomeitinrfx/users/yunhe/reproduce/hci_ordinal_output"
 
-SFT_EPOCHS = 2         # 微调 2 轮足够微调
-DPO_EPOCHS = 1         # 对齐 1 轮足够
+SFT_EPOCHS = 3         # SFT 3 轮（保证底座分类头完美收敛）
+DPO_EPOCHS = 2         # DPO 2 轮（保证偏好对齐充分且不过拟合）
 SFT_LR = 2e-4
 DPO_LR = 1e-5
 BETA = 0.1
