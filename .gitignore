@@ -40,3 +40,19 @@ ordinal_sim_output/sft_adapter/
 wandb/
 *.log
 logs/
+# 忽略所有模型权重
+results/checkpoints/*.pt
+
+# 忽略所有日志文件（可选，如果您不想提交实验日志）
+*.log
+wait_and_start.log
+stage1_vit.log
+stage2_E8.log
+stage2_E9*.log
+
+# 忽略临时脚本
+run_E8_pipeline.sh
+run_E9_pipeline.sh
+run_E9_v2.sh
+wait_and_start.sh
+

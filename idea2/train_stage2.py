@@ -10,6 +10,9 @@ from models.ranker import Ranker
 from models.losses import SoftSFDLoss, CORALLoss
 from utils import AverageMeter, compute_metrics
 
+from torch.cuda.amp import autocast, GradScaler
+scaler = GradScaler()
+
 def train_epoch(encoder, classifier, ranker, loader, bag_loader, optimizer, criterion_cls, criterion_rank, device, mode, lam=0.0, tau=0.05):
     encoder.train()
     classifier.train()
@@ -24,13 +27,14 @@ def train_epoch(encoder, classifier, ranker, loader, bag_loader, optimizer, crit
         
         # Pass 1: Classification
         imgs, labels = imgs.to(device), labels.to(device)
-        features = encoder(imgs)
-        logits = classifier(features)
-        loss_cls = criterion_cls(logits, labels)
+        with autocast():
+            features = encoder(imgs)
+            logits = classifier(features)
+            loss_cls = criterion_cls(logits, labels)
         
         # If S2.2, we backward classification first to free its activations
         if mode == 's2.2':
-            loss_cls.backward()
+            scaler.scale(loss_cls).backward()
             
             # Pass 2: Ranking
             try:
@@ -43,19 +47,22 @@ def train_epoch(encoder, classifier, ranker, loader, bag_loader, optimizer, crit
             B, K, C, H, W = bag_imgs.shape
             x = bag_imgs.view(B * K, C, H, W)
             
-            # Forward bag in chunks if necessary, but here we try 80 at once
-            bag_feats = encoder(x).view(B, K, -1)
-            scores, p_hat = ranker(bag_feats, tau=tau)
-            target_ranks = torch.arange(K, device=device).unsqueeze(0).expand(B, K)
-            loss_rank = lam * criterion_rank(p_hat, target_ranks)
+            with autocast():
+                # Forward bag
+                bag_feats = encoder(x).view(B, K, -1)
+                
+                scores, p_hat = ranker(bag_feats, tau=tau)
+                target_ranks = torch.arange(K, device=device).unsqueeze(0).expand(B, K)
+                loss_rank = lam * criterion_rank(p_hat, target_ranks)
             
-            loss_rank.backward()
+            scaler.scale(loss_rank).backward()
             total_loss_val = loss_cls.item() + loss_rank.item()
         else:
-            loss_cls.backward()
+            scaler.scale(loss_cls).backward()
             total_loss_val = loss_cls.item()
             
-        optimizer.step()
+        scaler.step(optimizer)
+        scaler.update()
         losses.update(total_loss_val, imgs.size(0))
         
     return losses.avg
@@ -101,6 +108,8 @@ def main():
     train_loader, val_loader, test_loader, train_bag_loader = get_dataloaders(args.data_dir, batch_size=args.batch_size)
     
     encoder = EncoderWrapper(name=args.encoder, pretrained=True).to(device)
+    if 'vit' in args.encoder:
+        encoder.encoder.set_grad_checkpointing(enable=True)
     ranker = None
     
     if args.stage1_ckpt and os.path.exists(args.stage1_ckpt):
