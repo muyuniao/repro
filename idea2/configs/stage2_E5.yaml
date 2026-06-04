@@ -1,0 +1,10 @@
+data_dir: "/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database/"
+encoder: "resnet50"
+stage1_ckpt: ""
+mode: "s2.1"
+loss: "coral"
+exp_name: "E5_resnet50_coral_baseline"
+epochs: 50
+batch_size: 32
+lr: 0.001
+seed: 42

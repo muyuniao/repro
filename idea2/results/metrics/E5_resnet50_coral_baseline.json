@@ -1,0 +1,26 @@
+{
+    "val_best_mae": 0.6633165829145728,
+    "test_acc": 0.5226130653266332,
+    "test_mae": 0.6432160804020101,
+    "test_qwk": 0.7120115774240231,
+    "test_rmse": 1.0272664610068547,
+    "test_spearman": 0.7241233357708516,
+    "test_cs1": 0.8693467336683417,
+    "args": {
+        "config": "",
+        "data_dir": "/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database/",
+        "encoder": "resnet50",
+        "stage1_ckpt": "",
+        "mode": "s2.1",
+        "loss": "coral",
+        "exp_name": "E5_resnet50_coral_baseline",
+        "epochs": 50,
+        "batch_size": 32,
+        "lr": 0.001,
+        "lambda_rank": 0.5,
+        "lr_encoder_ratio": 0.01,
+        "lr_ranker_ratio": 0.05,
+        "sinkhorn_tau": 0.05,
+        "seed": 42
+    }
+}

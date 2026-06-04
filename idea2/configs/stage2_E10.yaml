@@ -1,0 +1,10 @@
+data_dir: "/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database/"
+encoder: "vit_base_patch16_224.augreg_in21k_ft_in1k"
+stage1_ckpt: "results/checkpoints/stage1_vit_base_patch16_224.augreg_in21k_ft_in1k.pt"
+mode: "s2.3"
+loss: "ce"
+exp_name: "E10_vit_s2.3"
+epochs: 50
+batch_size: 32
+lr: 0.001
+seed: 42
