@@ -1,0 +1,14 @@
+data_dir: "/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database/"
+encoder: "resnet50"
+stage1_ckpt: ""
+mode: "s2.1"
+loss: "ce"
+exp_name: "stage2_exp"
+epochs: 50
+batch_size: 32
+lr: 0.001
+lambda_rank: 0.5
+lr_encoder_ratio: 0.01
+lr_ranker_ratio: 0.05
+sinkhorn_tau: 0.05
+seed: 42

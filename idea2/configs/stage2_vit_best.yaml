@@ -1,0 +1,14 @@
+data_dir: "/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database/"
+encoder: "vit_base_patch16_224.augreg_in21k_ft_in1k"
+stage1_ckpt: "results/checkpoints/stage1_vit_base_patch16_224.augreg_in21k_ft_in1k.pt"
+mode: "s2.2"
+loss: "ce"
+exp_name: "stage2_vit_best"
+epochs: 50
+batch_size: 32
+lr: 0.000830
+lambda_rank: 0.9785
+lr_encoder_ratio: 0.021708
+lr_ranker_ratio: 0.070373
+sinkhorn_tau: 0.05
+seed: 42

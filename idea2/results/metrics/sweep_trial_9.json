@@ -1,0 +1,24 @@
+{
+    "val_best_mae": 0.592964824120603,
+    "test_acc": 0.5477386934673367,
+    "test_mae": 0.6482412060301508,
+    "test_qwk": 0.6711178687115753,
+    "test_rmse": 1.0633218075125037,
+    "test_spearman": 0.6817790544224837,
+    "test_cs1": 0.8442211055276382,
+    "args": {
+        "data_dir": "/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database/",
+        "encoder": "vit_base_patch16_224.augreg_in21k_ft_in1k",
+        "stage1_ckpt": "results/checkpoints/stage1_vit_base_patch16_224.augreg_in21k_ft_in1k.pt",
+        "mode": "s2.2",
+        "loss": "ce",
+        "exp_name": "sweep_trial_9",
+        "epochs": 50,
+        "batch_size": 32,
+        "lr": 0.002792,
+        "lambda_rank": 0.4017,
+        "lr_encoder_ratio": 0.013573,
+        "lr_ranker_ratio": 0.130353,
+        "sinkhorn_tau": 0.05
+    }
+}

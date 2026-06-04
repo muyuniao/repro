@@ -1,0 +1,5 @@
+data_dir: "/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database/"
+encoder: "resnet50"
+epochs: 10
+batch_size: 16
+lr: 0.0001

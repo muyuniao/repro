@@ -1,5 +1,7 @@
 import os
+os.environ['HF_HUB_OFFLINE'] = '1'
 import argparse
+import yaml
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -91,7 +93,14 @@ def evaluate(encoder, classifier, loader, device, is_coral=False):
     return compute_metrics(all_preds, all_targets)
 
 def main():
+    # 1. 预解析 --config 参数
+    conf_parser = argparse.ArgumentParser(add_help=False)
+    conf_parser.add_argument('--config', type=str, default='', help='Path to YAML config file')
+    partial_args, remaining_argv = conf_parser.parse_known_args()
+    
+    # 2. 定义完整的参数解析器
     parser = argparse.ArgumentParser()
+    parser.add_argument('--config', type=str, default='', help='Path to YAML config file')
     parser.add_argument('--data_dir', type=str, default='/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database/')
     parser.add_argument('--encoder', type=str, default='resnet50')
     parser.add_argument('--stage1_ckpt', type=str, default='')
@@ -101,7 +110,34 @@ def main():
     parser.add_argument('--epochs', type=int, default=50)
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--lr', type=float, default=1e-3)
-    args = parser.parse_args()
+    parser.add_argument('--lambda_rank', type=float, default=0.5)
+    parser.add_argument('--lr_encoder_ratio', type=float, default=0.01)
+    parser.add_argument('--lr_ranker_ratio', type=float, default=0.05)
+    parser.add_argument('--sinkhorn_tau', type=float, default=0.05)
+    parser.add_argument('--seed', type=int, default=42, help='Random seed for reproducibility')
+    
+    # 3. 如果指定了配置文件，先加载配置文件并作为默认值
+    if partial_args.config:
+        if os.path.exists(partial_args.config):
+            print(f"Loading config from {partial_args.config}...")
+            with open(partial_args.config, 'r') as f:
+                config_dict = yaml.safe_load(f)
+            if config_dict:
+                parser.set_defaults(**config_dict)
+        else:
+            print(f"Warning: Config file {partial_args.config} not found. Using command line defaults.")
+            
+    args = parser.parse_args(remaining_argv)
+    
+    # Set random seed for reproducibility
+    import random
+    import numpy as np
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    torch.cuda.manual_seed_all(args.seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
@@ -135,9 +171,9 @@ def main():
     
     param_groups = [{'params': classifier.parameters(), 'lr': args.lr}]
     if args.mode != 's2.3':
-        param_groups.append({'params': encoder.parameters(), 'lr': args.lr * 0.01})
+        param_groups.append({'params': encoder.parameters(), 'lr': args.lr * args.lr_encoder_ratio})
     if args.mode == 's2.2':
-        param_groups.append({'params': ranker.parameters(), 'lr': args.lr * 0.05})
+        param_groups.append({'params': ranker.parameters(), 'lr': args.lr * args.lr_ranker_ratio})
         
     optimizer = optim.AdamW(param_groups, weight_decay=1e-4)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
@@ -147,9 +183,9 @@ def main():
     patience_counter = 0
     
     for epoch in range(args.epochs):
-        lam = max(0.0, 0.5 * (1.0 - epoch / (args.epochs * 0.7))) if args.mode == 's2.2' else 0.0
+        lam = max(0.0, args.lambda_rank * (1.0 - epoch / (args.epochs * 0.7))) if args.mode == 's2.2' else 0.0
         
-        loss = train_epoch(encoder, classifier, ranker, train_loader, train_bag_loader, optimizer, criterion_cls, criterion_rank, device, args.mode, lam=lam)
+        loss = train_epoch(encoder, classifier, ranker, train_loader, train_bag_loader, optimizer, criterion_cls, criterion_rank, device, args.mode, lam=lam, tau=args.sinkhorn_tau)
         scheduler.step()
         
         val_metrics = evaluate(encoder, classifier, val_loader, device, is_coral=(args.loss=='coral'))
@@ -179,6 +215,23 @@ def main():
     print("Test Metrics:")
     for k, v in test_metrics.items():
         print(f"{k}: {v:.4f}")
+        
+    import json
+    os.makedirs('results/metrics', exist_ok=True)
+    metrics_data = {
+        'val_best_mae': best_mae,
+        'test_acc': test_metrics['acc'],
+        'test_mae': test_metrics['mae'],
+        'test_qwk': test_metrics['qwk'],
+        'test_rmse': test_metrics['rmse'],
+        'test_spearman': test_metrics['spearman'],
+        'test_cs1': test_metrics['cs1'],
+        'args': vars(args)
+    }
+    metrics_path = f"results/metrics/{args.exp_name}.json"
+    with open(metrics_path, 'w') as f:
+        json.dump(metrics_data, f, indent=4)
+    print(f"Metrics saved to {metrics_path}")
 
 if __name__ == '__main__':
     main()

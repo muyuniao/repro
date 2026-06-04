@@ -1,5 +1,7 @@
 import os
+os.environ['HF_HUB_OFFLINE'] = '1'
 import argparse
+import yaml
 import torch
 import torch.optim as optim
 from data.dataset import get_dataloaders
@@ -35,13 +37,32 @@ def train_epoch(encoder, ranker, loader, optimizer, criterion, device, tau=1.0):
     return losses.avg
 
 def main():
+    # 1. 预解析 --config 参数
+    conf_parser = argparse.ArgumentParser(add_help=False)
+    conf_parser.add_argument('--config', type=str, default='', help='Path to YAML config file')
+    partial_args, remaining_argv = conf_parser.parse_known_args()
+    
+    # 2. 定义完整的参数解析器
     parser = argparse.ArgumentParser()
+    parser.add_argument('--config', type=str, default='', help='Path to YAML config file')
     parser.add_argument('--data_dir', type=str, default='/home/duomeitinrfx/data/HistoricalColor-ECCV2012/data/imgs/decade_database/')
     parser.add_argument('--encoder', type=str, default='resnet50')
     parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--lr', type=float, default=1e-4)
-    args = parser.parse_args()
+    
+    # 3. 如果指定了配置文件，先加载配置文件并作为默认值
+    if partial_args.config:
+        if os.path.exists(partial_args.config):
+            print(f"Loading config from {partial_args.config}...")
+            with open(partial_args.config, 'r') as f:
+                config_dict = yaml.safe_load(f)
+            if config_dict:
+                parser.set_defaults(**config_dict)
+        else:
+            print(f"Warning: Config file {partial_args.config} not found. Using command line defaults.")
+            
+    args = parser.parse_args(remaining_argv)
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
