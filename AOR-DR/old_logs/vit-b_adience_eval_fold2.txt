@@ -1,0 +1,1 @@
+Epoch 0, accuracy: 0.2969,f1: 0.0572,mae: 2.6094,sensitivity: 0.0371,specificity: 0.7871
