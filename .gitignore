@@ -55,4 +55,13 @@ run_E8_pipeline.sh
 run_E9_pipeline.sh
 run_E9_v2.sh
 wait_and_start.sh
+# 私人文件
+*.pptx
 
+
+# GECO large files
+GECO/hidden_states_Pridemm/
+GECO/ckpts/
+GECO/*.log
+*.pt
+*.pth
